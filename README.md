@@ -12,7 +12,7 @@ It was built to streamline manual data cleanup for both **mail** and **email** f
 - **Field Cleanup**: Standardizes:
   - U.S. zip codes
   - Social Security Numbers (SSNs)
-  - Insurance or plan ID numbers
+  - 401k plan ID numbers
 - **Source Type Tagging**: Detects whether each row originates from a mail or email file.
 - **Batch Processing**: Accepts entire Excel files and returns cleaned, structured data.
 - **Browser-Based UI**: Built with [Streamlit](https://streamlit.io) for an easy-to-use, interactive interface.
