@@ -151,10 +151,23 @@ class ParsedPerson:
             cell_value = self.row[col_name]
 
             if pd.notna(cell_value):
-                digits = re.sub(r'\D', '', str(cell_value))  # Strip all non-digits
-                if len(digits) >= 12:
-                    self.plan_number = digits[:5]
-                    self.ssn = digits[-7:]
+                text = str(cell_value)
+
+                # Try to find SSN with dashes first
+                ssn_match = re.search(r'\b\d{3}-\d{2}-\d{4}\b', text)
+                if ssn_match:
+                    self.ssn = ssn_match.group(0)
+                else:
+                    # Fallback: if undashed SSN embedded in string
+                    digits = re.sub(r'\D', '', text)
+                    if len(digits) >= 9:
+                        self.ssn = f"{digits[-9:-6]}-{digits[-6:-4]}-{digits[-4:]}"  # format last 9 digits
+
+                # Extract a 5-digit plan number from the beginning (if present)
+                plan_match = re.search(r'\b\d{5}\b', text)
+                if plan_match:
+                    self.plan_number = plan_match.group(0)
+
 
 def process_all_files(folder_path, extract_plan_ssn=False, communication_type="Print"):
     name_col_idx = column_letter_to_index(name_column_letter)
