@@ -210,7 +210,16 @@ if __name__ == "__main__":
 
     # Save everything to one Excel file
     result_df = pd.DataFrame(all_data)
+
+    # ❌ Remove any rows where any field contains "Bad SSN" (case-insensitive)
+    result_df = result_df[~result_df.apply(lambda row: row.astype(str).str.contains('Bad SSN', case=False).any(), axis=1)]
+
+    # 🧹 Drop fully duplicate rows (same values across all columns)
+    result_df = result_df.drop_duplicates()
+
+    # ✅ Write cleaned data to Excel
     result_df.to_excel("parsed_names.xlsx", index=False)
     print("All parsed data saved to parsed_names.xlsx")
+
 
 
