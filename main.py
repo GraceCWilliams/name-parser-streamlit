@@ -220,6 +220,3 @@ if __name__ == "__main__":
     # Write cleaned data to Excel
     result_df.to_excel("parsed_names.xlsx", index=False)
     print("All parsed data saved to parsed_names.xlsx")
-
-
-
